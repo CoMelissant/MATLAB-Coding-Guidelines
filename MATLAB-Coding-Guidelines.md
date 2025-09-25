@@ -41,6 +41,18 @@
   - [General](#general)
   - [Try-Catch](#try-catch)
 
+# Deviations in this fork from the original MathWorks version
+- This section.
+- Removed discussion on detection of rule and best practice violations using plain MATLAB - as this version of the document is targeting CC4M users.
+- Added [section](#detection-using-cc4m) on detection violations using CC4M.
+
+<!--# TODO
+- Add ID to every guidelin 
+- Update detection to also reflect the check used in CC4M
+-->
+
+
+
 # The Purpose of this Document
 
 As applications get larger and more complex, organizations are adopting more formal coding practices including code reviews, automated builds, and continuous integration. Organizations which develop applications involving teams of people writing MATLAB code want to introduce regularity and consistency in their code bases to enhance the quality of their MATLAB code.
@@ -142,53 +154,13 @@ The table for each guideline has the following fields.
 
 - **History:** The version of this document when the guideline was introduced.
 
-## Rules
+## Detection using CC4M
 
-Rule violations are (or will be) detectable by the MATLAB Code Analyzer. The Code Analyzer is a tool in MATLAB that examines code to identify problems and make recommendations for improvement. It can identify issues related to syntax errors, compatibility, performance, deprecated functionality and much, much more. The Code Analyzer provides [over two thousand checks](https://www.mathworks.com/help/matlab/matlab_env/index-of-code-analyzer-checks.html) for various potential code issues. Those checks can be enabled, disabled, or customized by [creating a local codeAnalyzerConfiguration.json file](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html) similar to the example shown below.
-
-<img title="" src="../images/codeAnalyzerConfiguration.png" alt="" width="439">
-
-The MATLAB Code Analyzer can detect violations for a subset of the Rules listed in this document. Note that some versions of MATLAB may not be able to detect violations for all of the rules. When the Code Analyzer detects a Rule violation, it identifies the issue in both the MATLAB Editor and the Code Analyzer Report. Beginning in R2025a, violations in the Editor are indicated on the right-hand side of the Editor panel as shown in the following screenshot.
-
-<img title="" src="../images/Editor%20Checks.png" alt="" width="356">
-
-This guidelines document is accompanied by a `codeAnalyzerConfiguration.json` file which implements the checks for the set of Rule violations that can be detected. 
-
-The Code Analyzer check for any Rule can be disabled. Consider the example in the screenshot above. There is a Rule that specifies that function names must be lowercase or lowerCamelCase. You can disable this Rule if you want to turn off checking for function name casing. Most Rules can also be configured. In the case above, you could change the options for function name casing to use a different convention (e.g., UpperCamelCase). The Detection field in the Rule information table provides information about which Code Analyzer check is used to detect violations of the Rule. You can then disable or modify the check in your Code Analyzer Configuration file.
-
-## Best Practices
-
-Best Practices are simply recommendations for writing better MATLAB code. The information provided for a Best Practice is similar to that provided for a Rule. Below is an example Best Practice from the Guidelines.
-
-There are some Best Practices that can (optionally) be detected as Rules by enabling a check in the Code Analyzer. Most of those checks are disabled by default. Information on optional detection, when available, is shown in the **Detection** field of the information for a Best Practice.
-
-**Type:** Best Practice
-
-**Description:** Use cell arrays only to store data of varying classes and/or sizes. Do not use cell arrays to store character vectors as text data. Use a string array instead.
-
-**Motivation:** 
-
-- Readability: Using string arrays instead of cell arrays of character vectors improves the readability of the code.
-
-- Performance: String operations are more performant than operations on cell arrays of character vectors.
-
-**Allowed:**
-
-```matlab
-data = {datetime "abc" 123};
-arrays = {rand(1,10) zeros(2,4) eye(5)};
-missions = ["Mercury" "Gemini" "Apollo"];
-```
-
-**Not Allowed:**
-
-```matlab
-missions = {'Mercury' 'Gemini' 'Apollo'};
-```
-
-**Detection:** Optionally by enabling Code Analyzer check `DAFCVC` (R2024a)
-
-**History:** Introduced in Version 1.0
+Starting with CC4M version 2.20 a configuration is shipped that checks compatibility with this set of guidelines.
+Why use CC4M? 
+- Using CC4M for detecting violations comes with a coverage of 58% of all guidelines (compared to 30% by using the MATLAB Code Analyzer)
+- CC4M runs all checks in MATLAB R2017b and newer. 
+- Other valuable features and all available checks are described in the [documentation](https://doc.monkeyproofsolutions.nl/code-checker-for-matlab/code-checker-for-matlab/index.html).
 
 ## Definitions
 
