@@ -54,7 +54,7 @@ All guidelines of type "Rule" are assigned priority "Highly recommended" and all
 Why use CC4M for checking compliance with the MATLAB Guidelines? 
 - Using CC4M for detecting violations comes with a coverage of over 60% of all guidelines (compared to ~30% by using the MATLAB Code Analyzer)
 - CC4M runs all checks in MATLAB R2017b and newer with the note that new features (like `arguments` block) are only checked for in the releases were the feature is available.
-- The Violations report includes a link to the violated guideline, making the checking process a learning experiecne as well.
+- The violations report includes a link to the violated guideline, making the checking process a learning experience as well.
 - Other valuable features and all available checks are described in the [documentation](https://doc.monkeyproofsolutions.nl/code-checker-for-matlab/code-checker-for-matlab/index.html).
 
 ## Deviations from original
@@ -64,7 +64,7 @@ Why use CC4M for checking compliance with the MATLAB Guidelines?
 - The "Detection" section of every guideline is expanded in case CC4M can detect violations.
 
 <!--# TODO
-- Add ID to every guidelin 
+- Add ID to every guideline 
 - Update detection to also reflect the check used in CC4M
 -->
 
