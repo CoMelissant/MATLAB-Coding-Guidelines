@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+- [Why this fork: use of CC4M](#why-this-fork-use-of-cc4m)
+  - [Detection using CC4M](#detection-using-cc4m)
 - [Motivations for the Guidelines](#motivations-for-the-guidelines)
 - [Understanding the Coding Guidelines](#understanding-the-coding-guidelines)
   - [How Guidelines are Documented](#how-guidelines-are-documented)
