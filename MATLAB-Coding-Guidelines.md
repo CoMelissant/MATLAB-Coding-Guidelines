@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+- [Why this fork: use of CC4M](#why-this-fork-use-of-cc4m)
+  - [Detection using CC4M](#detection-using-cc4m)
 - [Motivations for the Guidelines](#motivations-for-the-guidelines)
 - [Understanding the Coding Guidelines](#understanding-the-coding-guidelines)
   - [How Guidelines are Documented](#how-guidelines-are-documented)
@@ -40,6 +42,33 @@
 - [Error Handling Guidelines](#error-handling-guidelines)
   - [General](#general)
   - [Try-Catch](#try-catch)
+
+# Why this fork: use of CC4M
+
+## Detection using CC4M
+
+Starting with CC4M version 2.20 a configuration is shipped that checks compatibility with this set of guidelines.
+
+All guidelines of type "Rule" are assigned priority "Highly recommended" and all guidelines of type "Best practice" are assigned priority "Recommended". The objectives of the motivations are listed in the category.
+
+Why use CC4M for checking compliance with the MATLAB Guidelines? 
+- Using CC4M for detecting violations comes with a coverage of over 60% of all guidelines (compared to ~30% by using the MATLAB Code Analyzer)
+- CC4M runs all checks in MATLAB R2017b and newer with the note that new features (like `arguments` block) are only checked for in the releases were the feature is available.
+- The violations report includes a link to the violated guideline, making the checking process a learning experience as well.
+- Other valuable features and all available checks are described in the [documentation](https://doc.monkeyproofsolutions.nl/code-checker-for-matlab/code-checker-for-matlab/index.html).
+
+## Deviations from original
+
+- Removed discussion on detection of rule and best practice violations using MATLAB Code Analyzer - as this version of the document is targeting CC4M users.
+- Added a [section](#detection-using-cc4m) on detection violations using CC4M.
+- The "Detection" section of every guideline is expanded in case CC4M can detect violations.
+
+<!--# TODO
+- Add ID to every guideline 
+- Update detection to also reflect the check used in CC4M
+-->
+
+
 
 # The Purpose of this Document
 
@@ -142,6 +171,7 @@ The table for each guideline has the following fields.
 
 - **History:** The version of this document when the guideline was introduced.
 
+<!--
 ## Rules
 
 Rule violations are (or will be) detectable by the MATLAB Code Analyzer. The Code Analyzer is a tool in MATLAB that examines code to identify problems and make recommendations for improvement. It can identify issues related to syntax errors, compatibility, performance, deprecated functionality and much, much more. The Code Analyzer provides [over two thousand checks](https://www.mathworks.com/help/matlab/matlab_env/index-of-code-analyzer-checks.html) for various potential code issues. Those checks can be enabled, disabled, or customized by [creating a local codeAnalyzerConfiguration.json file](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html) similar to the example shown below.
@@ -169,6 +199,7 @@ There are some Best Practices that can (optionally) be detected as Rules by enab
 **Motivation:** 
 
 - Readability: Using string arrays instead of cell arrays of character vectors improves the readability of the code.
+## Detection using CC4M
 
 - Performance: String operations are more performant than operations on cell arrays of character vectors.
 
@@ -189,6 +220,9 @@ missions = {'Mercury' 'Gemini' 'Apollo'};
 **Detection:** Optionally by enabling Code Analyzer check `DAFCVC` (R2024a)
 
 **History:** Introduced in Version 1.0
+-->
+
+
 
 ## Definitions
 
@@ -375,7 +409,9 @@ sin
 sqrt
 ```
 
-**Detection:** Not detectable
+**Detection:**  
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNameIsShadowing`
 
 **History:** Introduced in Version 1.0
 
@@ -408,7 +444,9 @@ significancePearsonGravitationalCorrelation
 percentROIAreaContainingPositivePixels
 ```
 
-**Detection:** Code Analyzer check `naming.variable.maxLength` (R2025a)
+**Detection:**   
+- MLCA: Code Analyzer check `naming.variable.maxLength` (R2025a)  
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNameLength`
 
 **History:** Introduced in Version 1.0
 
@@ -444,7 +482,9 @@ e = m*c^2            % c = speed of light
 color, colorGroup    % pluralization
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+MLCA: Not detectable
+CC4M: Not Detectable
 
 **History:** Introduced in Version 1.0
 
@@ -477,7 +517,9 @@ BTransform
 Greenwich_Mean_Time
 ```
 
-**Detection:** Code Analyzer check `naming.variable.regularExpression` (R2025a)
+**Detection:** 
+- MLCA: Code Analyzer check `naming.variable.regularExpression` (R2025a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkVariableCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -510,23 +552,18 @@ validateBlockPathForModelBlockNormalModeVisibility
 plotExactRectangularMembraneConstantLineLoad
 ```
 
-**Detection:** Code Analyzer checks (R2025a)
+**Detection:** 
+- MLCA: Code Analyzer checks (R2025a)
+    - `naming.class.maxLength`
+    - `naming.function.maxLength`
+    - `naming.localFunction.maxLength`
+    - `naming.method.maxLength`
+    - `naming.nestedFunction.maxLength`
+    - `naming.property.maxLength`
+    - `naming.event.maxLength`
+    - `naming.enumeration.maxLength`
+- CC4M: `monkeyproof.cc4m_checks.checkNameLength` (does not check the length for properties, events, fieldnames or enumerations)
 
-- `naming.class.maxLength`
-
-- `naming.function.maxLength`
-
-- `naming.localFunction.maxLength`
-
-- `naming.method.maxLength`
-
-- `naming.nestedFunction.maxLength`
-
-- `naming.property.maxLength`
-
-- `naming.event.maxLength`
-
-- `naming.enumeration.maxLength`
 
 **History:** Introduced in Version 1.0
 
@@ -585,13 +622,12 @@ PRINTALL
 detect_features
 ```
 
-**Detection:** Code Analyzer checks (R2025a)
-
-- `naming.function.casing`
-
-- `naming.localFunction.casing`
-
-- `naming.nestedFunction.casing`
+**Detection:**  
+- MLCA: Code Analyzer checks (R2025a)
+    - `naming.function.casing`
+    - `naming.localFunction.casing`
+    - `naming.nestedFunction.casing`
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkUserDefinedFunctionCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -614,7 +650,9 @@ plot(x, y, LineWidth=2)
 surf(peaks, FaceColor="interp")
 ```
 
-**Detection:** Not detectable
+**Detection:**  
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkNameValuePairCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -664,7 +702,9 @@ shapes.Polynomial          % in a namespace
 ecgSignal                  % in the global namespace
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected.
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkClassCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -712,7 +752,9 @@ startRecording
 registerDevice
 ```
 
-**Detection:** Code Analyzer check `naming.method.casing` (R2025a)
+**Detection:** 
+- MLCA: Code Analyzer check `naming.method.casing` (R2025a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkMethodCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -760,7 +802,9 @@ RelativeTolerance
 Visible
 ```
 
-**Detection:** Code Analyzer check `naming.property.casing` (R2025a)
+**Detection:** 
+- MLCA: Code Analyzer check `naming.property.casing` (R2025a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkPropertyCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -783,7 +827,9 @@ RowSelected
 DeviceAdded
 ```
 
-**Detection:** Code Analyzer check `naming.event.casing` (R2025a)
+**Detection:** 
+- MLCA: Code Analyzer check `naming.event.casing` (R2025a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkEventCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -809,7 +855,9 @@ clustering
 astrometry.catalogue
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.casing.checkPackageCasing`
 
 **History:** Introduced in Version 1.0
 
@@ -866,7 +914,9 @@ fs = 1000; t = 0:1/fs:1; f = 9;
 for k = 1:N; dStp(k) = (1/2)*Stp(k-2) + (-2/3)*Stp(k-1); end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkOneStatementPerLine`
 
 **History:** Introduced in Version 1.0
 
@@ -902,7 +952,9 @@ molarVolume = 8.314*temperature/pressure;
 record = queryEmployees("ABF4578");
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkMagicNumber`
 
 **History:** Introduced in Version 1.0
 
@@ -931,7 +983,10 @@ x = 1.0e-1;
 x = .1;
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkZeroBeforeDecimalPoint`
+
 
 **History:** Introduced in Version 1.0
 
@@ -975,7 +1030,9 @@ h = 0.5*gravity*t.^2;
 end
 ```
 
-**Detection:** Not detected as a guideline. Is detected as a Code Analyzer warning by check `GVMIS` (R2021b)
+**Detection:** 
+- MLCA: Not detected as a guideline. Is detected as a Code Analyzer warning by check `GVMIS` (R2021b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkGlobalUsed`
 
 **History:** Introduced in Version 1.0
 
@@ -1018,7 +1075,9 @@ end
 end
 ```
 
-**Detection:** Optionally by enabling Code Analyzer check `DAFPV` (R2023a)
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer check `DAFPV` (R2023a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkPersistentUsed`
 
 **History:** Introduced in Version 1.0
 
@@ -1047,7 +1106,9 @@ Experiment.Range = [200 400];
 Experiment.Harmonic = true;
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkContiguousStructFieldDefinitions`
 
 **History:** Introduced in Version 1.0
 
@@ -1079,7 +1140,9 @@ missions = ["Mercury" "Gemini" "Apollo"];
 missions = {'Mercury' 'Gemini' 'Apollo'};
 ```
 
-**Detection:** Optionally by enabling Code Analyzer check `DAFCVC` (R2024a)
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer check `DAFCVC` (R2024a)
+- CC4M: `monkeyproof.cc4m_checks.standardReports.reportCellArrays`- Report, known datatypes of cell content reported, but no violations highlighted.
 
 **History:** Introduced in Version 1.0
 
@@ -1111,7 +1174,9 @@ load catalogue.mat                  % command form
 clear all                           % command form
 ```
 
-**Detection:** Optionally by enabling Code Analyzer check `DAFCF` (R2023a)
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer check `DAFCF` (R2023a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkCommandSyntax`
 
 **History:** Introduced in Version 1.0
 
@@ -1143,7 +1208,9 @@ y = -2^2;                    % Is this 4 or -4?
 m = A > 2 && B < 10 || C == 2;
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M:  `monkeyproof.cc4m_checks.standardChecks.checkParenthesesMathematicalOperators` and  `monkeyproof.cc4m_checks.standardChecks.checkParenthesesLogicalOperators`
 
 **History:** Introduced in Version 1.0
 
@@ -1172,7 +1239,9 @@ areEqual = isapprox(a, b);     % introduced in R2024b
 areEqual = (a == b);
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M:  `monkeyproof.cc4m_checks.standardChecks.checkComparisons` 
 
 **History:** Introduced in Version 1.0
 
@@ -1273,7 +1342,9 @@ for m = 1:size(A,1)
 end
 ```
 
-**Detection:** Code Analyzer check `MNCSN` (R2023a)
+**Detection:** 
+- MLCA: Code Analyzer check `MNCSN` (R2023a)
+- CC4M:  `monkeyproof.cc4m_checks.standardChecks.checkNestingDepth` 
 
 **History:** Introduced in Version 1.0
 
@@ -1305,7 +1376,9 @@ for k = 1:5
 end
 ```
 
-**Detection:** Not detectable as a guideline. Is detected as a Code Analyzer warning by check `AGROW` (R2006b)
+**Detection:** 
+- MLCA: Not detectable as a guideline. Is detected as a Code Analyzer warning by check `AGROW` (R2006b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -1336,7 +1409,9 @@ for ii = 1:n
 end
 ```
 
-**Detection:** Code Analyzer check `FXSET` (R2007b)
+**Detection:** 
+- MLCA: Code Analyzer check `FXSET` (R2007b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -1377,7 +1452,9 @@ for ii = 1:length(data)          % Sum positive values
 end
 ```
 
-**Detection:** Optionally by enabling Code Analyzer checks `DAFCO` (continue), `DAFBR` (break), and `DAFRT` (return)
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer checks `DAFCO` (continue), `DAFBR` (break), and `DAFRT` (return)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidFunctions`
 
 **History:** Introduced in Version 1.0
 
@@ -1432,7 +1509,9 @@ switch state
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSwitchOtherwise`
 
 **History:** Introduced in Version 1.0
 
@@ -1464,7 +1543,9 @@ x = 2*pi;
 currentFolder = pwd;
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNoInputArg`
 
 **History:** Introduced in Version 1.0
 
@@ -1486,7 +1567,9 @@ currentFolder = pwd;
 [~, ~, V] = svd(A);
 ```
 
-**Detection:** Not detected as a guideline. Is detected as a Code Analyzer warning by check `ASGLU` (R2010b)
+**Detection:** 
+- MLCANot detected as a guideline. Is detected as a Code Analyzer warning by check `ASGLU` (R2010b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -1553,7 +1636,9 @@ for ii = 1:numArrays
 end
 ```
 
-**Detection:** Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+**Detection:** 
+- MLCA: Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidFunctions`
 
 **History:** Introduced in Version 1.0
 
@@ -1596,7 +1681,9 @@ evalin("base", command);
 end
 ```
 
-**Detection:** Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+**Detection:** 
+- MLCA: Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidFunctions`
 
 **History:** Introduced in Version 1.0
 
@@ -1628,7 +1715,9 @@ addpath(genpath(newFolder));
 end
 ```
 
-**Detection:** Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+**Detection:**
+- MLCA: Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidFunctions`
 
 **History:** Introduced in Version 1.0
 
@@ -1668,7 +1757,9 @@ for ii = 1:m
 end
 ```
 
-**Detection:** Not currently detected. Applied by default Editor preference setting.
+**Detection:** 
+- MLCA: Not currently detected. Applied by default Editor preference setting.
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkTabCharacterUsed`
 
 **History:** Introduced in Version 1.0
 
@@ -1694,7 +1785,9 @@ for ii = 1:m
 end
 ```
 
-**Detection:** Not currently detected. Applied by default Editor preference setting.
+**Detection:** 
+- MLCA: Not currently detected. Applied by default Editor preference setting.
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkTabCharacterUsed`
 
 **History:** Introduced in Version 1.0
 
@@ -1756,7 +1849,9 @@ B = [1 2 3;4 5 6];
 T = rand(5,4,3,"single");
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkFollowedBySpace`
 
 **History:** Introduced in Version 1.0
 
@@ -1778,7 +1873,9 @@ T = rand(5,4,3,"single");
 first = 1;□□
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkWhiteSpaceEndOfLine`
 
 **History:** Introduced in Version 1.0
 
@@ -1808,7 +1905,9 @@ apparentMagnitude=1.2;
 plot(x, y, LineWidth = 3);
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces`
 
 **History:** Introduced in Version 1.0
 
@@ -1837,7 +1936,9 @@ if (x <= 3) || (x >= 5)
 A(A>2)
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces`
 
 **History:** Introduced in Version 1.0
 
@@ -1865,7 +1966,9 @@ A(A & ~mod(A, 2))
 C = A|B
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces`
 
 **History:** Introduced in Version 1.0
 
@@ -1897,7 +2000,9 @@ B = A(2 : end – 1);
 for ii = first + 1:last – 1
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces` (only colon operator itself checked)
 
 **History:** Introduced in Version 1.0
 
@@ -1928,7 +2033,9 @@ A.^2
 3 ^ 2
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces`
 
 **History:** Introduced in Version 1.0
 
@@ -1989,7 +2096,9 @@ A = [- 1 1];
 y = ~ x;
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSurrBySpaces`
 
 **History:** Introduced in Version 1.0
 
@@ -2257,7 +2366,9 @@ solarAzimuth = acos((term1 - term2)/cos(elevation));
 % last element of the current slice is below the lower limit.
 ```
 
-**Detection:** Code Analyzer check `LLMNC` (R2023a)
+**Detection:** 
+- MLCA: Code Analyzer check `LLMNC` (R2023a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkLineLength`
 
 **History:** Introduced in Version 1.0
 
@@ -2284,7 +2395,9 @@ index = (im(:,:,1) > h & (im(:,:,2)+im(:,:,3)) < l) | ...
     (im(:,:,3) > h & (im(:,:,1)+im(:,:,2)) < l);
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkOperatorsLineContinuation` detects placing of operators relative to the break
 
 **History:** Introduced in Version 1.0
 
@@ -2488,7 +2601,9 @@ end
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkTabCharacterUsed` 
 
 **History:** Introduced in Version 1.0
 
@@ -2508,7 +2623,9 @@ end
 
 - Understandability: It is confusing if the function name listed in the file does not match the name used to call that function.
 
-**Detection:** Code Analyzer check `FNDEF` (R14)
+**Detection:** 
+- MLCA: Code Analyzer check `FNDEF` (R14)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -2545,7 +2662,9 @@ function Tk = centigrade2Kelvin(Tc)
 Tk = Tc + 273.15;
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkFunctionEnd`
 
 **History:** Introduced in Version 1.0
 
@@ -2614,7 +2733,10 @@ Z = P*V/(R*T);                                   % compressibility
 end 
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkSubFunction`. Optionally activate `monkeyproof.cc4m_checks.standardChecks.checkComplexity` if "simple" can be tight to the Mcabe complexity of the local function.
+
 
 **History:** Introduced in Version 1.0
 
@@ -2656,7 +2778,9 @@ factor = vanDerWaals(temperature, pressure);
 end
 ```
 
-**Detection:** Optionally by enabling Code Analyzer check `DAFNF`
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer check `DAFNF`
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNestedFunction`
 
 **History:** Introduced in Version 1.0
 
@@ -2797,7 +2921,9 @@ function dP = dipPotential(xy, Q, D, R, r0, a, b, Dx, Dy, Nxy)
 function readBonay(T, diam, rh, phi, S, phi, visc, zr, kn)    
 ```
 
-**Detection:** Code Analyzer check `FCNIL` (R2023a)
+**Detection:** 
+- MLCA: Code Analyzer check `FCNIL` (R2023a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNumberOfInputsOutputsFunction`
 
 **History:** Introduced in Version 1.0
 
@@ -2824,7 +2950,9 @@ arguments
 end
 ```
 
-**Detection:** Not detectable
+**Detection:**
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkArgumentsBlockUsed`
 
 **History:** Introduced in Version 1.0
 
@@ -2854,7 +2982,9 @@ arguments
 end
 ```
 
-**Detection:** Not detected as a guideline. Use of `varargin` may be detected by enabling Code Analyzer check `DAFVI` (R2023b)
+**Detection:** 
+- MLCA: Not detected as a guideline. Use of `varargin` may be detected by enabling Code Analyzer check `DAFVI` (R2023b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidVararginout`
 
 **History:** Introduced in Version 1.0
 
@@ -2914,7 +3044,9 @@ function [tone, left, right] = psdTone(Pxx, F, rbw, freq)
 function [msg, nfft, Fs, w, p, flag, rtf] = psdchk(P, x, y)       
 ```
 
-**Detection:** Code Analyzer check `FCNOL` (R2023a)
+**Detection:** 
+-MLCA: Code Analyzer check `FCNOL` (R2023a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNumberOfInputsOutputsFunction`
 
 **History:** Introduced in Version 1.0
 
@@ -2969,7 +3101,9 @@ end
 function [tone, left, right] = psdTone(Pxx, F, rbw, freq)  
 ```
 
-**Detection:** Code Analyzer check `NCOMMA` (R2012b)
+**Detection:** 
+- MLCA: Code Analyzer check `NCOMMA` (R2012b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkMissingComma`
 
 **History:** Introduced in Version 1.0
 
@@ -2989,7 +3123,9 @@ function [tone, left, right] = psdTone(Pxx, F, rbw, freq)
 
 - Maintainability: Matching the class name and file name makes it easier to locate the class definition when debugging or modifying code.
 
-**Detection:** Code Analyzer check `MCFIL` (R2008a)
+**Detection:** 
+- MLCA: Code Analyzer check `MCFIL` (R2008a)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -3058,7 +3194,9 @@ classdef OpticFlow
 end
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkDuplicateAttributes`
 
 **History:** Introduced in Version 1.0
 
@@ -3100,7 +3238,9 @@ classdef OpticFlow
 end 
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkDuplicateAttributes`
 
 **History:** Introduced in Version 1.0
 
@@ -3311,7 +3451,9 @@ classdef Rectangle
 end
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkDuplicateAttributes`
 
 **History:** Introduced in Version 1.0
 
@@ -3372,7 +3514,9 @@ classdef SquareMatrix
 end
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkNumberOfOutputsConstructor`
 
 **History:** Introduced in Version 1.0
 
@@ -3456,7 +3600,9 @@ classdef Rectangle
 end
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkGetterAndSetter`; Also set methods are reported.
 
 **History:** Introduced in Version 1.0
 
@@ -3504,7 +3650,9 @@ See documentation on Modular Indexing for detailed examples
 
 - Readability: Fixing Code Analyzer warnings ensures that code is free of potential issues like unused variables, unreachable code, or poor formatting resulting in cleaner and more readable code.
 
-**Detection:** Indicated in Editor or Code Analyzer Report
+**Detection:** 
+- MLCA: Indicated in Editor or Code Analyzer Report
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
 
 **History:** Introduced in Version 1.0
 
@@ -3620,7 +3768,9 @@ end
 end
 ```
 
-**Detection:** Optionally by enabling Code Analyzer check `CTCH` (R2010b)
+**Detection:** 
+- MLCA: Optionally by enabling Code Analyzer check `CTCH` (R2010b)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkTryExceptionHandling`
 
 **History:** Introduced in Version 1.0
 
@@ -3693,7 +3843,9 @@ GitHub API request failed: Could not access server.
 https://api.github.com/search/repositories?q=language:matlab.
 ```
 
-**Detection:** Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d).
+**Detection:** 
+- MLCA: Optionally using [custom Code Analyzer check for existing functions](https://www.mathworks.com/help/matlab/matlab_env/configure-code-analyzer.html#mw_38519ef1-c176-4933-b2e6-bd17e641681d).
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkAvoidFunctions`
 
 **History:** Introduced in Version 1.0
 
