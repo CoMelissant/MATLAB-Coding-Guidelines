@@ -1,4 +1,9 @@
-# MATLAB Coding Guidelines
+# MATLAB Coding Guidelines 
+**... mapped to CC4M checks**
+
+This repository is a fork that adds information regarding checking the guidelines using [CC4M](https://monkeyproofsolutions.nl/products/code-checker-for-matlab/). Details on this are listed in [MATLAB-Coding-Guidelines](MATLAB-Coding-Guidelines.md#why-this-fork-use-of-cc4m)
+
+## Original introduction
 
 This repository contains a set of recommended MATLAB Coding Guidelines. These guidelines have been developed primarily for large organizations or teams of MATLAB developers who want to introduce some degree of regularity and consistency in their MATLAB code bases. Use of the guidelines is optional.
 
@@ -22,5 +27,6 @@ The contents of each folder is as follows.
 The guidelines are expected to evolve over time driven by feedback from the MATLAB community. We encourage your feedback and suggestions for future revisions. Feel free to open an issue or post to the discussions. Your insights and feedback help us improve this document and make it even more useful for the community.
 
 You may use the guidelines document and the related codeAnalyzerConfiguration.json file as a starting point to create your own local guidelines to meet the specific needs of your organization.
+
 
 
