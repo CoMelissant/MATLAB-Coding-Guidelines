@@ -2132,7 +2132,9 @@ t2 = sind(solarElevation).*cosd(panelTilt);
 panelRadiation = solarRadiation.*max(0, t1+t2);
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` Reports blank lines issues around `if-else`, `switch-case`, `for`, `parfor`, `spmd`, `try` and `while` blocks. Using Comments as a separator for coding blocks is configured in a separate check to allow easy disabling. (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -2171,7 +2173,9 @@ Tk = Tc + 273.15;
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -2220,7 +2224,9 @@ methods
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` - same configuration as local functions from above (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -2273,7 +2279,9 @@ methods (Access = Protected)
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -2317,7 +2325,9 @@ properties (Dependent)
 end
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not currently detected
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
