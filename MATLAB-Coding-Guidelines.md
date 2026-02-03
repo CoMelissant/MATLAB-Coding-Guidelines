@@ -52,7 +52,7 @@ Starting with CC4M version 2.20 a configuration is shipped that checks compatibi
 All guidelines of type "Rule" are assigned priority "Highly recommended" and all guidelines of type "Best practice" are assigned priority "Recommended". The objectives of the motivations are listed in the category.
 
 Why use CC4M for checking compliance with the MATLAB Guidelines? 
-- Using CC4M for detecting violations comes with a coverage of over 60% of all guidelines (compared to ~30% by using the MATLAB Code Analyzer)
+- Using CC4M for detecting violations comes with a coverage of over 65% of all guidelines (compared to ~30% by using the MATLAB Code Analyzer)
 - CC4M runs all checks in MATLAB R2017b and newer with the note that new features (like `arguments` block) are only checked for in the releases were the feature is available.
 - The violations report includes a link to the violated guideline, making the checking process a learning experience as well.
 - Other valuable features and all available checks are described in the [documentation](https://doc.monkeyproofsolutions.nl/code-checker-for-matlab/code-checker-for-matlab/index.html).
@@ -2463,7 +2463,9 @@ index = (im(:,:,1) > h & (im(:,:,2)+im(:,:,3)) < l) | ...
 % Find increasing, decreasing edge line indices 
 ```
 
-**Detection:** Not currently detected
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: Not detectable
 
 **History:** Introduced in Version 1.0
 
@@ -2504,7 +2506,9 @@ b = A(sub2ind(size(A), 1:size(A,1), idx'))';
 end
 ```
 
-**Detection:** Not detectable
+**Detection:**
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkHelpText` configured to check for a H1 line starting with the function nname and after that expecting at least another line of help. (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -2551,7 +2555,9 @@ end
 end
 ```
 
-**Detection:** Not detectable
+**Detection:** 
+- MLCA: Not detectable
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkBlankLines` requires comment to be on top of a code block - so checks if there is a blank line above the comment line(s). (since CC4M v2.21)
 
 **History:** Introduced in Version 1.0
 
@@ -3135,7 +3141,7 @@ function [tone, left, right] = psdTone(Pxx, F, rbw, freq)
 
 **Detection:** 
 - MLCA: Code Analyzer check `MCFIL` (R2008a)
-- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings)
+- CC4M: `monkeyproof.cc4m_checks.standardChecks.checkEditorWarnings` (reporting MLCA warnings) and since v2.21 `monkeyproof.cc4m_checks.standardChecks.checkClassImplementationErrors` 
 
 **History:** Introduced in Version 1.0
 
